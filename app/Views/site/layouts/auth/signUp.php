@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Core/style.css">
+    <link rel="stylesheet" href="../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
         <div class="text-center my-5">
             <h1 class="fw-bold">Create new account</h1>
         </div>
-        <form action="./auth/create" method="post" class="px-4">
+        <form action="./auth/create" method="post" class="px-4" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="first_name" class="form-label">First name</label>
                 <input
@@ -41,7 +41,6 @@
                     class="form-control"
                     id="first_name"
                     name="firstName"
-                    value="<?= $auth['firstName'] ?>"
                     required
                 />
             </div>
@@ -74,6 +73,9 @@
                     name="phone"
                     required
                 />
+                <?php if(isset($_GET['phoneError'])) : ?>
+                    <p class='error text-danger mt-2 fw-bold'>Số điện thoại không đúng định dạng</p>
+                <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -84,6 +86,9 @@
                     name="email"
                     required
                 />
+                <?php if(isset($_GET['emailError'])) : ?>
+                    <p class='error text-danger mt-2 fw-bold'>Email đã được đăng ký từ trước</p>
+                <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
@@ -95,7 +100,7 @@
             <div class="mb-3">
                 <label for="avatar" class="form-label">Avatar</label>
                 <div class="position-relative">
-                    <input type="text" class="form-control" id="avatar" name="image" />
+                    <input type="file" class="form-control" id="avatar" name="image" />
                 </div>
             </div>
             <button type="submit" class="btn btn-primary w-100">Create</button>

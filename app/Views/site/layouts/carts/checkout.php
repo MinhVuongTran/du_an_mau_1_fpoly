@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Core/style.css">
+    <link rel="stylesheet" href="../../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -54,7 +54,7 @@
             </nav>
         </div>
     </header>
-    <form class="container">
+    <form action="#" method="POST" class="container">
         <div class="rounded border">
             <div class="box-title__header">
                 <h2 class="m-0 fs-5">Thông tin đặt hàng</h2>
@@ -110,9 +110,9 @@
                     <?php foreach($products as $product) : ?>
                         <tr>
                             <td></td>
-                            <td width="250px"><?=$product['name']?></td>
+                            <td class="name_ellipsis"><?=$product['name']?></td>
                             <td width="100px">
-                                    <img class="w-100" src="<?=$product['image']?>" alt="">
+                                    <img class="w-100" src="../<?=$product['image']?>" alt="">
                                 </td>
                             <td>
                                 <?=$product['quantity']?>  

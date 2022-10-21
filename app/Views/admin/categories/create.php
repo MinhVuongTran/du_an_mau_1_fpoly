@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Core/style.css">
+    <link rel="stylesheet" href="../../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <title>Document</title>
@@ -43,22 +43,22 @@
                         <a class="nav-link active" aria-current="page" href="../../admin/user">Khách hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Bình luận</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/comment">Bình luận</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Thống kê</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/category/statistical">Thống kê</a>
                     </li>
                     </ul>
                 </div>
                 </div>
             </nav>
         </header>
-        <form name='form' action="../category/saveCreate" method="POST">
+        <form name='form' action="../category/saveCreate" method="POST" >
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?=isset($_GET['id']) ? $category['name'] : ''?>">
-                <?php if(isset($_GET['error'])) : ?>
-                    <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
+                <input type="text" class="form-control" id="name" name="name" value="<?=isset($_GET['id']) ? $category['name'] : ''?>" required>
+                <?php if(isset($_GET['categoriesError'])) : ?>
+                    <p class='error text-danger mt-2 fw-bold'>Đã tồn tại</p>
                 <?php endif ?>
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">

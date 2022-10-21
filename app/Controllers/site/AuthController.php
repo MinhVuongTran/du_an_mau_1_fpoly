@@ -74,7 +74,38 @@
                 $phone = $_POST["phone"];
                 $email = $_POST["email"];
                 $password = $_POST["password"];
-                $avatar = $_POST["avatar"];
+                
+                $file = $_FILES['image'];
+
+                // check email & phone
+                $checkEmail = $this -> authModel -> checkExist('users', 'email', $email, $auth['id']);
+                $checkPhone = $this -> authModel -> validatePhoneNumber($phone);
+
+
+                if ($checkPhone != 1 && $checkEmail != "") {
+                    header("location: ../auth?update&phoneError&emailError");
+                    die;
+                }
+    
+                if($checkPhone != 1) {
+                    header("location: ../auth?update&phoneError");
+                    die;
+                }
+    
+                if($checkEmail != "") {
+                    header("location: ../auth?update&emailError");
+                    die;
+                }
+
+                if($file['size'] == 0) {
+                    $data = $this -> authModel -> getAuth($_SESSION["auth"]['email']);
+                    $image = $data['image'];
+                } else {
+                    $image = "./uploads/user/" . $file['name'];
+                    move_uploaded_file($file['tmp_name'], $image);
+                    $image = "." . $image;
+                }
+                
                 $data = [
                     'firstName' => "${firstName}",
                     'lastName' => "${lastName}",
@@ -82,7 +113,7 @@
                     'phone' => "${phone}",
                     'email' => "${email}",
                     'password' => "${password}",
-                    'image' => "${avatar}",
+                    'image' => "${image}",
                 ];
 
                 $this -> authModel -> updateAuth($data, $auth['id']);
@@ -96,7 +127,31 @@
             $phone = $_POST["phone"];
             $email = $_POST["email"];
             $password = $_POST["password"];
-            $avatar = $_POST["avatar"];
+
+            // check email & phone
+            $checkEmail = $this -> authModel -> checkExist('users', 'email', $email);
+            $checkPhone = $this -> authModel -> validatePhoneNumber($phone);
+
+            if ($checkPhone != 1 && $checkEmail != "") {
+                header("location: ../auth?signup&phoneError&emailError");
+                die;
+            }
+
+            if($checkPhone != 1) {
+                header("location: ../auth?signup&phoneError");
+                die;
+            }
+
+            if($checkEmail != "") {
+                header("location: ../auth?signup&emailError");
+                die;
+            }
+
+            $file = $_FILES['image'];
+            $image = "./uploads/user/" . $file['name'];
+            move_uploaded_file($file['tmp_name'], $image);
+            $image = "." . $image;
+
             $data = [
                 'firstName' => "${firstName}",
                 'lastName' => "${lastName}",
@@ -104,7 +159,7 @@
                 'phone' => "${phone}",
                 'email' => "${email}",
                 'password' => "${password}",
-                'image' => "${avatar}",
+                'image' => "${image}",
                 'status' => 1,
                 'role' => 0,
             ];

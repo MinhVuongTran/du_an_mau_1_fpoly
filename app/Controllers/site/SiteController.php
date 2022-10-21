@@ -15,17 +15,27 @@
 
         public function index() {
             $categories = $this -> categoryModel -> getAll();
-            $products = $this -> productModel -> getAll();
-            $data = $this -> pagination("products", $products, 9, $this -> productModel);
-            $productPagination = $data[0];
-            $numOfPage = $data[1];
             $productsView = $this -> productModel -> getProductTopView();
-            $this -> view('site.index', [
-                'categories' => $categories,
-                'products' => $productPagination,
-                'numOfPage' => $numOfPage,
-                'productsView' => $productsView
-            ]);
+            if(isset($_GET["search"])) {
+                $keyword = $_GET["search"];
+                $products = $this -> productModel -> getProductsFromSearch($keyword);
+                $this -> view('site.index', [
+                    'categories' => $categories,
+                    'products' => $products,
+                    'productsView' => $productsView
+                ]);
+            } else {
+                $products = $this -> productModel -> getAll();
+                $data = $this -> productModel -> pagination("products", $products, 9);
+                $productPagination = $data[0];
+                $numOfPage = $data[1];
+                $this -> view('site.index', [
+                    'categories' => $categories,
+                    'products' => $productPagination,
+                    'numOfPage' => $numOfPage,
+                    'productsView' => $productsView
+                ]);
+            }
         }
     }
 ?>

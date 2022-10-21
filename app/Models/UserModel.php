@@ -1,5 +1,4 @@
 <?php
-
     class UserModel extends BaseModel {
         const TABLE = 'users';
 

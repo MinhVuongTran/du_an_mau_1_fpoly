@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Core/style.css">
+    <link rel="stylesheet" href="../../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <title>Document</title>
@@ -43,63 +43,63 @@
                         <a class="nav-link active" aria-current="page" href="../../admin/user">Khách hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Bình luận</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/comment">Bình luận</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Thống kê</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/category/statistical">Thống kê</a>
                     </li>
                     </ul>
                 </div>
                 </div>
             </nav>
         </header>
-        <form name='form' action="../product/saveUpdate" method="POST">
+        <form name='form' action="../product/saveUpdate" method="POST" enctype="multipart/form-data">
             <input type="hidden" value="<?=$data['id']?>" name="id">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label> 
-                <input type="text" class="form-control" id="name" name="name" value="<?=$data['name']?>">
+                <input type="text" class="form-control" id="name" name="name" value="<?=$data['name']?>" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="number" step=".01" class="form-control" id="price" name="price" value="<?=$data['price']?>">
+                <input type="number" step=".01" class="form-control" id="price" name="price" value="<?=$data['price']?>" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="quantity" class="form-label">Quantity</label>
-                <input type="number" step="1" class="form-control" id="quantity" name="quantity" value="<?=$data['quantity']?>">
+                <input type="number" step="1" class="form-control" id="quantity" name="quantity" value="<?=$data['quantity']?>" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="discount" class="form-label">Discount</label>
-                <input type="number" class="form-control" id="discount" name="discount" value="<?=$data['discount']?>">
+                <input type="number" class="form-control" id="discount" name="discount" value="<?=$data['discount']?>" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="text" class="form-control" id="image" name="image" value="<?=$data['image']?>">
+                <input type="file" class="form-control" id="image" name="image">
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description"><?=$data['description']?></textarea>
+                <textarea class="form-control" id="description" name="description" required><?=$data['description']?></textarea>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="received_date" class="form-label">Received_date</label>
-                <input type="date" class="form-control" id="received_date" name="received_date" value="<?=$data['received_date']?>">
+                <input type="date" class="form-control" id="received_date" name="received_date" value="<?=$data['received_date']?>" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>

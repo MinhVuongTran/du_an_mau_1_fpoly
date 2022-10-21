@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Core/style.css">
+    <link rel="stylesheet" href="../../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -44,17 +44,17 @@
                         <a class="nav-link active" aria-current="page" href="../../admin/user">Khách hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Bình luận</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/comment">Bình luận</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Thống kê</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/category/statistical">Thống kê</a>
                     </li>
                     </ul>
                 </div>
                 </div>
             </nav>
         </header>
-        <form name='form' action="../user/saveUpdate" method="POST">
+        <form name='form' action="../user/saveUpdate" method="POST" enctype="multipart/form-data">
             <input type="hidden" value="<?=$data['id']?>" name="id">
             <div class="mb-3">
                 <label for="firstName" class="form-label">First Name</label> 
@@ -87,8 +87,8 @@
             <div class="mb-3 ">
                 <label for="email" class="form-label">Email</label> 
                 <input type="email" class="form-control " id="email" name="email" value="<?=$data['email']?>">
-                <?php if(isset($_GET['error'])) : ?>
-                    <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
+                <?php if(isset($_GET['usersError'])) : ?>
+                    <p class='error text-danger mt-2 fw-bold'>Đã tồn tại</p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
@@ -103,7 +103,7 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="text" class="form-control" id="image" name="image" value="<?=$data['image']?>">
+                <input type="file" class="form-control" id="image" name="image">
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
@@ -111,11 +111,11 @@
             <div class="mb-3 d-flex">
                 <label for="status" class="form-label">Status</label>
                 <span class="ms-4 d-inline-flex align-items-center">
-                    <input type="radio" name="status" id="no-status" value="0" <?= $data['status'] == 0 ? "checked" : ""?>>
+                    <input type="radio" name="status" id="no-status" value="0" <?= $data['status'] == 0 ? "checked" : ""?> required>
                     <label for="no-status" class="form- mb-1 ps-1">No</label>
                 </span>
                 <span class="ms-4 d-inline-flex align-items-center">
-                    <input type="radio" name="status" id="yes-status" value="1" <?= $data['status'] == 1 ? "checked" : ""?>>
+                    <input type="radio" name="status" id="yes-status" value="1" <?= $data['status'] == 1 ? "checked" : ""?> required>
                     <label for="yes-status" class="form-label mb-1 ps-1">Yes</label>
                 </span>
                 <?php if(isset($_GET['error'])) : ?>

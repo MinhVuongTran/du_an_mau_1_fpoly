@@ -1,5 +1,4 @@
 <?php
-
     class CartModel extends BaseModel {
         const TABLE = 'carts';
 
@@ -16,7 +15,8 @@
         }
 
         public function deleteDataFromCart($user_id, $product_id) {
-            $sql = "DELETE from carts where cart_detail_id = (SELECT c.cart_detail_id from carts c INNER JOIN carts_detail cd on c.cart_detail_id = cd.id where user_id = ${user_id} and product_id = ${product_id}) and product_id = (SELECT c.product_id from carts c INNER JOIN carts_detail cd on c.cart_detail_id = cd.id where user_id = ${user_id} and product_id = ${product_id})";
+            $product_ids = implode(',', $product_id);
+            $sql = "DELETE from carts where cart_detail_id = (SELECT c.cart_detail_id from carts c INNER JOIN carts_detail cd on c.cart_detail_id = cd.id where user_id = ${user_id} GROUP BY cart_detail_id) and product_id IN (${product_ids})";
             
             $this -> execute($sql);
             $this -> resetId(self::TABLE); 
@@ -27,17 +27,8 @@
         }
 
         public function updateQuantity($product_id, $user_id, $oldQuantity, $newQuantity) {
-            $sql = "UPDATE carts c INNER JOIN carts_detail cd on c.cart_detail_id = cd.id set quantity = (${oldQuantity} + ${newQuantity}) where c.product_id = $product_id and cd.user_id = $user_id";
+            $sql = "UPDATE carts c INNER JOIN carts_detail cd on c.cart_detail_id = cd.id set quantity = (${oldQuantity} + ${newQuantity}) where c.product_id = ${product_id} and cd.user_id = ${user_id}";
             $this -> execute($sql);
         }
-
-        // public function updateUser($data, $id) {
-        //     return $this -> update(self::TABLE, $data, $id); 
-        // }
-
-        // public function deleteUser($id) {
-        //     $this -> delete(self::TABLE, $id);
-        //     $this -> resetId(self::TABLE); 
-        // }
     }
 ?>

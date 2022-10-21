@@ -26,7 +26,12 @@
             $phone = $_POST['phone'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $image = $_POST['image'];
+
+            $file = $_FILES['image'];
+            $image = "./uploads/user/" . $file['name'];
+            move_uploaded_file($file['tmp_name'], $image);
+            $image = "." . $image;
+            
             $status = $_POST['status'];
             $role = $_POST['role'];
             $data = [
@@ -40,8 +45,15 @@
                 'status' => "${status}",
                 'role' => "${role}"
             ];
-            $this -> userModel -> createUser($data);
-            header('location: ../user');
+            $check = $this -> userModel -> checkExist("users", "email", $email);
+            
+            // Check exist
+            if($check == "") {
+                $this -> userModel -> createUser($data);
+                header('location: ../user');
+            } else {
+                header("location: ../user/create?${check}");
+            }
         }
 
         public function update() {
@@ -58,7 +70,17 @@
             $phone = $_POST['phone'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $image = $_POST['image'];
+
+            $file = $_FILES['image'];
+            if($file['size'] == 0) {
+                $data = $this -> userModel -> getOne($_POST["id"]);
+                $image = $data['image'];
+            } else {
+                $image = "./uploads/user/" . $file['name'];
+                move_uploaded_file($file['tmp_name'], $image);
+                $image = "." . $image;
+            }
+
             $status = $_POST['status'];
             $role = $_POST['role'];
             $data = [
@@ -74,15 +96,37 @@
             ];
 
             $id = $_POST["id"];
+            $check = $this -> userModel -> checkExist("users", "email", $email, $id);
 
-            $this -> userModel -> updateUser($data, $id);
-            header('location: ../user');
+            if($check == "") {
+                $this -> userModel -> updateUser($data, $id);
+                header('location: ../user');
+            } else {
+                header("location: ../user/update?id=${id}&${check}");
+            }
+
+            
         }
 
         public function delete() {
-            $id = $_GET['id'];
-            $this -> userModel -> deleteUser($id);
-            header('location: ../user');
+            if(isset($_POST["action"])) {
+                $action = $_POST["action"];
+                switch ($action) {
+                    case 'delete':
+                        $id = $_POST['userIds'];
+                        $this -> userModel -> deleteUser($id);
+                        header('location: ../user');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                if(isset($_GET["id"])) {
+                    $id = $_GET['id'];
+                    $this -> userModel -> deleteUser($id);
+                    header('location: ../user');
+                }
+            }
         }
     }
 ?>

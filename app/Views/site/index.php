@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Core/style.css">
+    <link rel="stylesheet" href="./Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -48,21 +48,21 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-5">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#"
-                                >Giới thiệu</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Góp ý</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Hỏi đáp</a>
-                            </li>
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-5 align-items-start">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#"
+                                    >Giới thiệu</a
+                                    >
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Góp ý</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Hỏi đáp</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -80,15 +80,16 @@
                     </div>
                     <div class="carousel-inner">
                         <?php foreach ($productsView as $key => $productView) : ?>
+                            <?php $arrUrl = explode("../", $productView['image']);
+                                $urlImg = $arrUrl[1];
+                            ?>
                             <div class="carousel-item <?= $key == 0 ? 'active' : ''?>"  data-bs-interval="10000">
                                 <img
-                                    src="<?= $productView['image'] ?>"
-                                    class="d-block  m-auto slide-img"
-                                    alt="..."
+                                    src="./<?= $urlImg ?>"
+                                    class="d-block m-auto w-100 slide-img"
+                                    alt=""
+                                    style="object-fit: contain"
                                 />
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5 class="text-primary fw-semibold fs-3"><?= $productView['name'] ?></h5>
-                                </div>
                             </div>
                         <?php endforeach ?>
                     </div>
@@ -105,14 +106,17 @@
                 <div class="text-center product-list mt-4">
                     <div class="row row-cols-3 g-4">
                         <?php foreach ($products as $product) : ?>
+                            <?php $arrUrl = explode("../", $product['image']);
+                                $urlImg = $arrUrl[1];
+                            ?>
                             <div class="col">
                                 <div class="card w-100 h-100 p-0 overflow-hidden">
                                     <a href="./site/product/detail?id=<?= $product['id'] ?>" class="h-100">
                                         <img
-                                            src="<?= $product['image'] ?>"
+                                            src="./<?= $urlImg ?>"
                                             class="card-img-top w-100 h-100"
                                             alt="<?= $product['name'] ?>"
-                                            style="object-fit: contain;"
+                                            style="object-fit: cover;"
                                         />
                                     </a>
                                     <div class="card-body text-start fs-5">
@@ -124,7 +128,7 @@
                                                 <p class="text-danger m-0 fw-semibold"><?= $product['price'] ?>$</p>
                                             <?php endif ?>
                                         </div>
-                                        <p class="card-text text-center"><?= $product['name'] ?></p>
+                                        <p class="card-text product_name"><?= $product['name'] ?></p>
                                     </div>
                                     <div class="product-item__sell fw-semibold fs-6">
                                         <span class="text-danger fw-semibold percent">
@@ -137,32 +141,34 @@
                         <?php endforeach?>
                     </div>
                     <!-- Pagination -->
-                    <nav aria-label="Page navigation example ">
-                        <ul class="pagination justify-content-center mt-4">
-                            <li class="page-item <?= !isset($_GET["page"]) || $_GET["page"] == 1 ? "disabled" : "" ?>">
-                                <a class="page-link" 
-                                    href="?page=<?=isset($_GET["page"]) ? $_GET["page"] - 1 : "" ?>"           
-                                    aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <?php for($i = 1; $i <= $numOfPage; $i++) : ?>
-                                <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
-                            <?php endfor ?>
-                            <li class="page-item <?= isset($_GET["page"]) && ($_GET["page"] + 1) > $numOfPage ? "disabled" : "" ?>" >
-                                <a class="page-link" 
-                                    <?php if(!isset($_GET["page"]) || $_GET["page"] == 1) : ?>
-                                        href="?page=2"
-                                    <?php else : ?>
-                                        href="?page=<?= $_GET["page"] + 1 ?>"
-                                    <?php endif?>
-                                    aria-label="Next"
-                                >
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <?php if(isset($numOfPage)) : ?>
+                        <nav aria-label="Page navigation example ">
+                            <ul class="pagination justify-content-center mt-4">
+                                <li class="page-item <?= !isset($_GET["page"]) || $_GET["page"] == 1 ? "disabled" : "" ?>">
+                                    <a class="page-link" 
+                                        href="?page=<?=isset($_GET["page"]) ? $_GET["page"] - 1 : "" ?>"           
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <?php for($i = 1; $i <= $numOfPage; $i++) : ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                                <?php endfor ?>
+                                <li class="page-item <?= isset($_GET["page"]) && ($_GET["page"] + 1) > $numOfPage || $numOfPage == 1 ? "disabled" : "" ?>" >
+                                    <a class="page-link" 
+                                        <?php if(!isset($_GET["page"]) || $_GET["page"] == 1) : ?>
+                                            href="?page=2"
+                                        <?php else : ?>
+                                            href="?page=<?= $_GET["page"] + 1 ?>"
+                                        <?php endif?>
+                                        aria-label="Next"
+                                    >
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    <?php endif?>
                 </div>
             </section>
 
@@ -237,12 +243,13 @@
                             </a>
                         <?php endforeach ?>
                     </div>
-                    <form class="d-flex box-title__footer" role="search">
+                    <form action="./site?search" class="d-flex box-title__footer" role="search">
                         <input
                             class="form-control me-2"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
+                            name="search"
                         />
                         <button class="btn btn-outline-primary" type="submit">Search</button>
                     </form>
@@ -254,19 +261,22 @@
                         <h2 class="m-0 fs-5">Top 10 yêu thích</h2>
                     </div>
                     <?php foreach ($productsView as $productView) : ?>
+                        <?php $arrUrl = explode("../", $productView['image']);
+                                $urlImg = $arrUrl[1];
+                        ?>
                         <a
                             href="./site/product/detail?id=<?= $productView['id'] ?>"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                         >
                             <div class="w-25">
                                 <img
-                                    src="<?= $productView['image'] ?>"
+                                    src="./<?= $urlImg ?>"
                                     alt=""
                                     class="w-100"
                                 />
                             </div>
                             <div class="w-75 ps-4">
-                                <span class=""><?= $productView['name'] ?></span>
+                                <span class="product_name"><?= $productView['name'] ?></span>
                             </div>
                         </a>
                     <?php endforeach ?>

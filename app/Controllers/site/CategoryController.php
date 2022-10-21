@@ -16,10 +16,10 @@
             if(isset($_GET["id"])) {
                 $id = $_GET["id"];
                 $products = $this -> productModel -> getAll($id);
-                $data = $this -> pagination("products", $products, 10, $this -> productModel, $id);
+                $data = $this -> productModel -> pagination("products", $products, 10, $id);
             } else {
                 $products = $this -> productModel -> getAll();
-                $data = $this -> pagination("products", $products, 10, $this -> productModel);
+                $data = $this -> productModel -> pagination("products", $products, 10);
             }
 
             $productPagination = $data[0];

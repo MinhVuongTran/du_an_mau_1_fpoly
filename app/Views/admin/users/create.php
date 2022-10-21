@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Core/style.css">
+    <link rel="stylesheet" href="../../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -44,56 +44,56 @@
                         <a class="nav-link active" aria-current="page" href="../../admin/user">Khách hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Bình luận</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/comment">Bình luận</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Thống kê</a>
+                        <a class="nav-link active" aria-current="page" href="../../admin/category/statistical">Thống kê</a>
                     </li>
                     </ul>
                 </div>
                 </div>
             </nav>
         </header>
-        <form name='form' action="../user/saveCreate" method="POST">
+        <form name='form' action="../user/saveCreate" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="firstName" class="form-label">First Name</label> 
-                <input type="text" class="form-control" id="firstName" name="firstName">
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="lastName" class="form-label">Last Name</label> 
-                <input type="text" class="form-control" id="lastName" name="lastName">
+                <input type="text" class="form-control" id="lastName" name="lastName" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label> 
-                <input type="text" class="form-control" id="address" name="address">
+                <input type="text" class="form-control" id="address" name="address" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label> 
-                <input type="number" class="form-control" id="phone" name="phone">
+                <input type="number" class="form-control" id="phone" name="phone" required>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
             </div>
             <div class="mb-3 ">
                 <label for="email" class="form-label">Email</label> 
-                <input type="email" class="form-control " id="email" name="email">
-                <?php if(isset($_GET['error'])) : ?>
-                    <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
+                <input type="email" class="form-control " id="email" name="email" required>
+                <?php if(isset($_GET['usersError'])) : ?>
+                    <p class='error text-danger mt-2 fw-bold'>Đã tồn tại</p>
                 <?php endif ?>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label> 
                 <div class="position-relative">
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" required>
                     <i type="button" id="toggle-password" class="bi bi-eye fs-5 pointer position-absolute top-50 end-0 translate-middle"></i>
                 </div>
                 <?php if(isset($_GET['error'])) : ?>
@@ -102,7 +102,7 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="text" class="form-control" id="image" name="image">
+                <input type="file" class="form-control" id="image" name="image">
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
                 <?php endif ?>
@@ -110,12 +110,12 @@
             <div class="mb-3 d-flex">
                 <label for="status" class="form-label">Status</label>
                 <span class="ms-4 d-inline-flex align-items-center">
-                    <input type="radio" name="status" id="no-status" value="0">
-                    <label for="no-status" class="form- mb-1 ps-1">No</label>
+                    <input type="radio" name="status" id="no-status" value="0" required>
+                    <label for="no-status" class="form- mb-1 ps-1">Không kích hoạt</label>
                 </span>
                 <span class="ms-4 d-inline-flex align-items-center">
                     <input type="radio" name="status" id="yes-status" value="1">
-                    <label for="yes-status" class="form-label mb-1 ps-1">Yes</label>
+                    <label for="yes-status" class="form-label mb-1 ps-1">Kích hoạt</label>
                 </span>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>
@@ -124,12 +124,12 @@
             <div class="mb-3 d-flex">
                 <label for="role" class="form-label">Role</label>
                 <span class="ms-4 d-inline-flex align-items-center">
-                    <input type="radio" name="role" id="no-role" value="0">
-                    <label for="no-role" class="form- mb-1 ps-1">No</label>
+                    <input type="radio" name="role" id="no-role" value="0" required>
+                    <label for="no-role" class="form- mb-1 ps-1">Khách hàng</label>
                 </span>
                 <span class="ms-4 d-inline-flex align-items-center">
                     <input type="radio" name="role" id="yes-role" value="1">
-                    <label for="yes-role" class="form-label mb-1 ps-1">Yes</label>
+                    <label for="yes-role" class="form-label mb-1 ps-1">Quản trị viên</label>
                 </span>
                 <?php if(isset($_GET['error'])) : ?>
                     <p class='error text-danger mt-2 fw-bold'><?=$_GET['error']?></p>

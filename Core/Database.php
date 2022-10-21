@@ -3,7 +3,7 @@
 
         public function connect() {
             $server_name = "host=127.0.0.1";
-            $dbname = "du_an_mau_1";
+            $dbname = "du_an_mau_1_fpoly";
             $username = "root";
             $password = "";
             try  {

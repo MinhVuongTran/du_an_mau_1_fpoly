@@ -12,10 +12,17 @@
         }
 
         public function index() {            
-            $products = $this -> productModel -> getAll();
+            if (isset($_GET["filter"])) {
+                $category = $_GET["filter"];
+                $products = $this -> productModel -> getAll($category);
+            } else {
+                $products = $this -> productModel -> getAll();
+            }
+            $categories = $this -> categoryModel -> getAll();
             
             return $this -> view('admin.products.index', [
                 'products' => $products,
+                'categories' => $categories,
             ]); 
         }
 
@@ -31,7 +38,12 @@
             $price = $_POST['price'];
             $quantity = $_POST['quantity'];
             $discount = $_POST['discount'];
-            $image = $_POST['image'];
+
+            $file = $_FILES['image'];
+            $image = "./uploads/product/" . $file['name'];
+            move_uploaded_file($file['tmp_name'], $image);
+            $image = "." . $image;
+
             $description = $_POST['description'];
             $received_date = $_POST['received_date'];
             $special = $_POST['special'];
@@ -65,7 +77,17 @@
             $price = $_POST['price'];
             $quantity = $_POST['quantity'];
             $discount = $_POST['discount'];
-            $image = $_POST['image'];
+            
+            $file = $_FILES['image'];
+            if($file['size'] == 0) {
+                $data = $this -> productModel -> getOne($_POST["id"]);
+                $image = $data['image'];
+            } else {
+                $image = "./uploads/product/" . $file['name'];
+                move_uploaded_file($file['tmp_name'], $image);
+                $image = "." . $image;
+            }
+
             $description = $_POST['description'];
             $received_date = $_POST['received_date'];
             $special = $_POST['special'];
@@ -87,9 +109,24 @@
         }
 
         public function delete() {
-            $id = $_GET['id'];
-            $this -> productModel -> deleteProduct($id);
-            header('location: ../product');
+            if(isset($_POST["action"])) {
+                $action = $_POST["action"];
+                switch ($action) {
+                    case 'delete':
+                        $id = $_POST['productIds'];
+                        $this -> productModel -> deleteProduct($id);
+                        header('location: ../product');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                if(isset($_GET["id"])) {
+                    $id = $_GET['id'];
+                    $this -> productModel -> deleteProduct($id);
+                    header('location: ../product');
+                }
+            }
         }
     }
 ?>

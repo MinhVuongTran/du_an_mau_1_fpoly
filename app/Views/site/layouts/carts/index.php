@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Core/style.css">
+    <link rel="stylesheet" href="../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -90,8 +90,7 @@
                         <th scope="col">price</th>   
                         <th scope="col">discount</th>   
                         <th scope="col">total</th>   
-                        <th scope="col">
-                        </th>
+                        <th scope="col" colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,16 +101,12 @@
                                     <input class='form-check-input' type='checkbox' name='cartIds[]' value='<?=$cart['product_id']?>' />
                                 </div>
                             </td>
-                            <td width="250px"><?=$cart['name']?></td>
+                            <td class="name_ellipsis"><?=$cart['name']?></td>
                             <td width="100px">
                                     <img class="w-100" src="<?=$cart['image']?>" alt="">
                                 </td>
                             <td>
-                                <div class="d-flex align-items-center ">
-                                    <span class="btn-quantity btn-quantity_dash"><i class="bi bi-dash fs-5 fw-semibold"></i></span>
-                                    <input type="number" name="quantity" min="0" max="<?= $products[$cart['product_id'] - 1]['quantity'] ?>" step="1" id="product_quantity" class="product_quantity btn-quantity fs-5" value="<?= $cart['quantity'] ?>">
-                                    <span class="btn-quantity btn-quantity_plus"><i class="bi bi-plus fs-5 fw-semibold"></i></span>
-                                </div>    
+                                <?= $cart['quantity'] ?>
                             </td>
                             <td><?=$cart['price']?>$</td>
                             <td><?=$cart['discount']?></td>
@@ -161,30 +156,6 @@
             let checkedCount = document.querySelectorAll('input[name="cartIds[]"]:checked').length; 
             checkedCount > 0 ? executeBtn.classList.remove('disabled') : executeBtn.classList.add('disabled'); 
         }
-
-        const plusBtn = document.querySelectorAll('.btn-quantity_plus');
-        const quantityBtn = document.querySelectorAll('.product_quantity');
-        const dashBtn = document.querySelectorAll('.btn-quantity_dash');
-
-        plusBtn.forEach((btn, index) => {
-            btn.onclick = () => {
-                let value = Number(quantityBtn[index].value);
-                if (value + 1 > quantityBtn[index].max) {
-                    return;
-                }
-                quantityBtn[index].value = value + 1;
-            }
-        })
-
-        dashBtn.forEach((btn, index) => {
-            btn.onclick = () => {
-                let value = Number(quantityBtn[index].value);
-                if (value === 1) {
-                    return;
-                }
-                quantityBtn[index].value = value - 1;
-            }
-        })
     </script>
 </body>
 </html>;

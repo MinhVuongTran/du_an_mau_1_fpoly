@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Core/style.css">
+    <link rel="stylesheet" href="../Core/index.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <title>Document</title>
@@ -56,11 +56,11 @@
         </header>
         <div class="container">
             <div class="categories-wrapper d-flex justify-content-center align-items-center">
-                <a href="./category" class="btn btn-primary rounded-pill fs-5 fw-semibold text-white px-3 me-3">
+                <a href="./category" class="btn btn-primary rounded-pill fs-6 fw-semibold text-white px-3 me-3">
                     Tất cả
                 </a>
                 <?php foreach($categories as $category) : ?>
-                    <a href="./category?id=<?= $category['id'] ?>" class="btn btn-primary rounded-pill fs-5 fw-semibold text-white px-3 me-3">
+                    <a href="./category?id=<?= $category['id'] ?>" class="btn btn-primary rounded-pill fs-6 fw-semibold text-white px-3 me-3">
                         <?= $category['name'] ?>
                     </a>
                 <?php endforeach ?>
@@ -75,11 +75,11 @@
                                         src="<?= $product['image'] ?>"
                                         class="card-img-top w-100 h-100"
                                         alt="<?= $product['name'] ?>"
-                                        style="object-fit: contain;"
+                                        style="object-fit: cover;"
                                     />
                                 </a>
                                 <div class="card-body text-start fs-5">
-                                    <div class="bg-muted d-flex align-items-center justify-content-center fs-4 flex-wrap">
+                                    <div class="bg-muted d-flex align-items-center justify-content-center fs-4">
                                         <?php if($product['discount'] > 0) : ?>
                                             <span class="fs-5 text-muted text-decoration-line-through "><?= $product['price'] ?>$</span>
                                             <p class="text-danger m-0 mx-4 fw-semibold"><?= $product['price'] - ($product['price'] * $product['discount'] / 100) ?>$</p>   
@@ -87,7 +87,7 @@
                                             <p class="text-danger m-0 fw-semibold"><?= $product['price'] ?>$</p>
                                         <?php endif ?>
                                     </div>
-                                    <p class="card-text text-center"><?= $product['name'] ?></p>
+                                    <p class="card-text product_name"><?= $product['name'] ?></p>
                                 </div>
                                 <div class="product-item__sell fw-semibold fs-6">
                                     <span class="text-danger fw-semibold percent">
@@ -112,7 +112,7 @@
                         <?php for($i = 1; $i <= $numOfPage; $i++) : ?>
                             <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
                         <?php endfor ?>
-                        <li class="page-item <?= isset($_GET["page"]) && ($_GET["page"] + 1) > $numOfPage ? "disabled" : "" ?>" >
+                        <li class="page-item <?= isset($_GET["page"]) && ($_GET["page"] + 1) > $numOfPage || $numOfPage == 1 ? "disabled" : "" ?>" >
                             <a class="page-link" 
                                 <?php if(!isset($_GET["page"]) || $_GET["page"] == 1) : ?>
                                     href="?page=2"
